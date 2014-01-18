@@ -4,9 +4,16 @@
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="WindowCreator.cpp" />
     <ClCompile Include="OpenGLInitialization.cpp" />
+    <ClCompile Include="Shaders.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowCreator.h" />
     <ClInclude Include="OpenGLInitialization.h" />
+    <ClInclude Include="Shaders.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ExtendedOpenGLHeaders">
+      <UniqueIdentifier>{2b8bc7c3-6b2e-43ea-a1e3-df8f5ece3b55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
