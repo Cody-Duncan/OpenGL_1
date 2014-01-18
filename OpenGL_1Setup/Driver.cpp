@@ -43,10 +43,13 @@ int main()
         printf("Rendered by: %s\n", glGetString(GL_RENDERER));
         fflush(stdout);
 
+        //set clear color and enable features
         glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LESS);
 
+
+        //Create Shader
         GLuint vertexShader = CreateShader("vert.hlsl", GL_VERTEX_SHADER);
         GLuint pixelShader = CreateShader("pixe.hlsl", GL_FRAGMENT_SHADER);
         
@@ -57,9 +60,12 @@ int main()
         glUseProgram(baseShader);
 
         //checking for correct indexing
-        //int index = glGetAttribLocation(baseShader, "position");
-        //int index2 = glGetAttribLocation(baseShader, "outColor");
+        //GLint index = glGetAttribLocation(baseShader, "position");
+        //GLint index2 = glGetAttribLocation(baseShader, "outColor");
+        GLint MatrixID = glGetUniformLocation(baseShader, "MVP");
 
+
+        //create cube vertices
         static const GLfloat g_vertex_buffer_data[] = {
             -1.0f,-1.0f,-1.0f, // triangle 1 : begin
             -1.0f,-1.0f, 1.0f,
@@ -116,7 +122,7 @@ int main()
             (void*)0                          // array buffer offset
         );
 
-        // One color for each vertex. They were generated randomly.
+        //cube colors per vertex
         static const GLfloat g_color_buffer_data[] = {
             1.0f,  0,  0,
             0,  1.0f,  0,
@@ -172,38 +178,40 @@ int main()
             (void*)0                          // array buffer offset
         );
 
-        float angle = 0.0f;
+        //World, View, Projection matrices
         glm::mat4 view = glm::lookAt(
-            glm::vec3(0, 2, -3), // the position of your camera, in world space
-            glm::vec3(0,0,0),   // where you want to look at, in world space
-            glm::vec3(0,1,0)        // probably glm::vec3(0,1,0), but (0,-1,0) would make you looking upside-down, which can be great too
+            glm::vec3(0, 2, -3),
+            glm::vec3(0,0,0),
+            glm::vec3(0,1,0)
         );
         glm::mat4 projection = glm::perspective(
-            75.0f,        
-            4.0f / 3.0f, 
-            0.1f,        
-            100.0f       
+            75.0f,        //FOV
+            4.0f / 3.0f,  //aspect ratio
+            0.1f,         //near plane
+            100.0f        //far plane
         );
         glm::mat4 viewProj =  projection * view;
+
         glm::mat4 world;
+
+        float angle = 0.0f;
 
         while(!QuitMsgRecieved)
         {
             CheckMessagePump();
 
-            angle += 0.5f;
+            angle += 0.5f; //increase angle to make rotation
+            world = glm::mat4(); //reset matrix
+            world = glm::rotate(world, angle, glm::vec3(0,1,0));
             
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             glPushMatrix();
-
-                world = glm::mat4();
-                world = glm::rotate(world, angle, glm::vec3(0,1,0));
                 
-                GLint MatrixID = glGetUniformLocation(baseShader, "MVP");
+                //update matrix in shader
                 glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &(viewProj * world)[0][0]);
-                glTranslatef(1.0f, 0.0f, -1.0f);
 
+                //draw cube
                 glDrawArrays(GL_TRIANGLES, 0, 12*3);
 
             glPopMatrix();
