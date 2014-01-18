@@ -1,6 +1,7 @@
 #include "OpenGLInitialization.h"
 
 #include <Windows.h>
+#include <iostream>
 
 HGLRC hRC;
 HDC hDC;
@@ -17,9 +18,11 @@ void InitOpenGL(HWND windowHandle)
     pfd.nVersion = 1;
     pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
     pfd.iPixelType = PFD_TYPE_RGBA;
-    pfd.cColorBits = 24;
-    pfd.cDepthBits = 16;
+    pfd.cColorBits = 32;
+    pfd.cDepthBits = 24;
+    pfd.cStencilBits = 16;
     pfd.iLayerType = PFD_MAIN_PLANE;
+
     int iFormat = ChoosePixelFormat( hDC, &pfd );
     SetPixelFormat( hDC, iFormat, &pfd );
 
