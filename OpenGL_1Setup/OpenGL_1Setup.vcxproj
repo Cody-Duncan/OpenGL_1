@@ -90,9 +90,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Driver.cpp" />
+    <ClCompile Include="OpenGLInitialization.cpp" />
     <ClCompile Include="WindowCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="OpenGLInitialization.h" />
     <ClInclude Include="WindowCreator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

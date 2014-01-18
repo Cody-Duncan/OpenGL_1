@@ -3,8 +3,10 @@
   <ItemGroup>
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="WindowCreator.cpp" />
+    <ClCompile Include="OpenGLInitialization.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowCreator.h" />
+    <ClInclude Include="OpenGLInitialization.h" />
   </ItemGroup>
 </Project>

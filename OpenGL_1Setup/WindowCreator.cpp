@@ -4,6 +4,7 @@
 
 HWND ghMainWnd = 0;
 HINSTANCE ghInstance = 0;
+bool QuitMsgRecieved = false;
 
 bool GenerateWindow(WNDPROC WndProc, int width, int height);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -86,7 +87,7 @@ void CheckMessagePump()
 
         if (msg.message == WM_QUIT)
         {
-            //TODO exit
+            QuitMsgRecieved = true;
         }
     }
 }
